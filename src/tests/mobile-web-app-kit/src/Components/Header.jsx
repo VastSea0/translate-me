@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { auth, firestore, firebase } from '../firebase/firebase';
+import { auth, firestore } from '../firebase/firebase';
 import { Menu, X, Home, Info, Settings, LogInIcon, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
