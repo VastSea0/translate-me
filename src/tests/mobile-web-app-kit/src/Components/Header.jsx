@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { auth, firestore, firebase} from '../firebase/firebase';
-import { Menu, X, Home, Info, Settings, LogInIcon, User, LogOutIcon } from 'lucide-react';
+import { Menu, X, Home, Info, Settings, LogInIcon, User, LogOutIcon, GamepadIcon } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function Header() {
@@ -29,6 +29,7 @@ export default function Header() {
     { icon: Home, text: 'Home', path: '/' },
     { icon: Info, text: 'About', path: '/about' },
     { icon: Settings, text: 'Settings', path: '/settings' },
+    { icon: GamepadIcon, text: 'Playground', path: '/playground' },
      
   ];
 
@@ -55,7 +56,7 @@ export default function Header() {
               
             >
               <Home size={20} className="mr-4" />
-              <span>App Name</span>
+              <span>Translate Me!</span>
             </Link>
         
           <button
