@@ -31,10 +31,10 @@ body {
 .pages {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: calc(100vh - var(--header-height) );
 
   margin-top: var(--header-height);
-  padding: 20px;
+ 
   flex-grow: 1;
 }
 
