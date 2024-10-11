@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { auth, firestore, firebase } from '../firebase/firebase';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
+    const navigate = useNavigate();
     const [user, setUser] = useState(null);
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (authUser) => {
@@ -25,7 +27,7 @@ export default function Home() {
         <h2 className="text-3xl font-bold">Home Page</h2>
         <p className="mt-4">Welcome, {user ? user.displayName : 'Guest'}</p>
         <p>Welcome to the Mobile Web App Kit homepage!</p>
-        <button className="btn btn-primary mt-4">Get Started</button>
+        <button className="btn btn-primary mt-4" onClick={()=> {navigate("/about")}}>Get Started</button>
       </div>
     </div>
     );

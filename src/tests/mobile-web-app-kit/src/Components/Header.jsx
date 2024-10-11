@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { auth, firestore } from '../firebase/firebase';
-import { Menu, X, Home, Info, Settings, LogInIcon, User } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { auth, firestore, firebase} from '../firebase/firebase';
+import { Menu, X, Home, Info, Settings, LogInIcon, User, LogOutIcon } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Header() {
-
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const [user, setUser] = useState(null);
@@ -32,13 +32,32 @@ export default function Header() {
      
   ];
 
+
+  const handleLogout = () => {
+    firebase.auth().signOut()
+        .then(() => {
+            console.log('Oturum başarıyla kapatıldı.');
+            navigate('/login');
+        })
+        .catch((error) => {
+            console.error('Oturum kapatma hatası:', error);
+        });
+  };
  
  
   return (
     <>
       <header className="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
         <div className="flex justify-between items-center px-4 py-3">
-          <h1 className="text-xl font-bold text-blue-600">App Name</h1>
+        <Link
+              to="/"
+              className="flex items-center"
+              
+            >
+              <Home size={20} className="mr-4" />
+              <span>App Name</span>
+            </Link>
+        
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
@@ -87,6 +106,7 @@ export default function Header() {
           })}
 
           {user ? (
+            <>
             <Link
               to="/profile"
               className="flex items-center px-6 py-4 hover:bg-gray-100 transition-colors"
@@ -95,6 +115,12 @@ export default function Header() {
               <User size={20} className="mr-4" />
               <span>Profile</span>
             </Link>
+            <button onClick={handleLogout} className="flex items-center px-6 py-4 hover:bg-gray-100 transition-colors">
+              <LogOutIcon size={20} className="mr-4" />
+              <span>Log Out</span>
+            </button>
+            </>
+   
           ) : (
             <Link
               to="/login"

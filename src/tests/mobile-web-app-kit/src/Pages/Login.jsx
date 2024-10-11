@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate} from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { auth, firebase, firestore } from '../firebase/firebase';
 
 export default function LoginPage() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     nick: ''
   });
+
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -61,6 +63,7 @@ export default function LoginPage() {
       const result = await auth.signInWithEmailAndPassword(formData.email, formData.password);
       const user = result.user;
       console.log("Giriş başarılı!", user);
+      navigate('/profile');
     } catch (error) {
       if (error.code === 'auth/user-not-found') {
         try {
@@ -93,6 +96,9 @@ export default function LoginPage() {
       }
     } finally {
       setIsLoading(false);
+      console.log("Giriş yapıldı!");
+      navigate('/profile');
+
     }
   };
 
@@ -123,21 +129,39 @@ export default function LoginPage() {
       }));
     } finally {
       setIsLoading(false);
+      console.log("Google ile giriş yapıldı!");
+      navigate('/profile');
+
     }
   };
 
+  // Kullanıcı zaten giriş yapmışsa, anasayfaya yönlendir
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        navigate('/profile');
+      }
+    });
+
+    return () => unsubscribe();
+  },[auth]);
+
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Hesabınıza giriş yapın
         </h2>
+        {/*
+        Maybe later we can add a sign up link here
         <p className="mt-2 text-center text-sm text-gray-600">
           Hesabınız yok mu?{' '}
           <Link to="/signup" className="font-medium text-blue-600 hover:text-blue-500">
             Kayıt olun
           </Link>
         </p>
+        */}
+
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
