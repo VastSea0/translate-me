@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Gamepad2Icon } from "lucide-react";
 const games = [
   {
-    title: "Swipe Me",
+    title: "SwipeLingo",
     description: "Kelime kaydırma oyunu.",
     points: 100,
     hashtags: ["#kelime", "#kaydırma", "#oyun"],
