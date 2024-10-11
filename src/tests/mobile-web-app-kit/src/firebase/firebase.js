@@ -5,13 +5,13 @@ import 'firebase/compat/firestore';
 import 'firebase/compat/storage';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAgjb9v0LS5AtjIKr_6ejWkvPVdvubIHXY",
-    authDomain: "opensodaproject.firebaseapp.com",
-    projectId: "opensodaproject",
-    storageBucket: "opensodaproject.appspot.com",
-    messagingSenderId: "364099706420",
-    appId: "1:364099706420:web:6d39db2bff04a3af6ff461",
-    measurementId: "G-E7ZWYC9NJV"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
+    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
   };
   
   
