@@ -9,6 +9,11 @@ import About from "./Pages/About";
 import LoginPage from "./Pages/Login";
 import ProfilePage from "./Pages/Profile";
 import PlayGround from "./Pages/PlayGround";
+import SwipeMe from "./Pages/PlayGround/SwipeMe";
+
+// TEST GAMES
+//import Game from "./Pages/PlayGround/tests/swipeMeAlg";
+
 
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
@@ -27,6 +32,11 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/playground" element={<PlayGround />} />
+          <Route path="/playground/1" element={<SwipeMe />} />
+          {/*
+          Test Routes
+          <Route path="/tests/game/swipe" element={<Game />} />
+          */}
         </Routes>
       </div>
       <Footer />

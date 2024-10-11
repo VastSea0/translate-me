@@ -26,8 +26,9 @@ export default function Home() {
       <div className="text-center">
         <h2 className="text-3xl font-bold">Home Page</h2>
         <p className="mt-4">Welcome, {user ? user.displayName : 'Guest'}</p>
-        <p>Welcome to the Mobile Web App Kit homepage!</p>
-        <button className="btn btn-primary mt-4" onClick={()=> {navigate("/about")}}>Get Started</button>
+       
+        <p>Click the button below to start learning languages.</p>
+        <button className="btn btn-primary mt-4" onClick={()=> {navigate("/playground")}}>PlayGround</button>
       </div>
     </div>
     );
