@@ -18,58 +18,196 @@ export default function PlayGround() {
 
     const Words = {
         "english": {
-            "words": {
-                "hello": {
-                    self: "Hello",
-                    translation: "Merhaba",
-                    falseStates: ["Hoşça kal", "Teşekkürler", "İyi geceler"],
-                    id: 0
-                },
-                "goodbye": {
-                    self: "Goodbye",
-                    translation: "Hoşça kal",
-                    falseStates: ["Merhaba", "Hoş geldin", "İyi günler"],
-                    id: 1
-                },
-                "please": {
-                    self: "Please",
-                    translation: "Lütfen",
-                    falseStates: ["Teşekkürler", "Affedersiniz", "Özür dilerim"],
-                    id: 2
-                },
-                "thank you": {
-                    self: "Thank you",
-                    translation: "Teşekkür ederim",
-                    falseStates: ["Rica ederim", "Özür dilerim", "Lütfen"],
-                    id: 3
-                },
-                "yes": {
-                    self: "Yes",
-                    translation: "Evet",
-                    falseStates: ["Hayır", "Belki", "Kesinlikle"],
-                    id: 4
-                },
-                "no": {
-                    self: "No",
-                    translation: "Hayır",
-                    falseStates: ["Evet", "Tamam", "Olabilir"],
-                    id: 5
-                },
-                "excuse me": {
-                    self: "Excuse me",
-                    translation: "Affedersiniz",
-                    falseStates: ["Teşekkürler", "Özür dilerim", "Lütfen"],
-                    id: 6
-                },
-                "sorry": {
-                    self: "Sorry",
-                    translation: "Özür dilerim",
-                    falseStates: ["Affedersiniz", "Teşekkürler", "Rica ederim"],
-                    id: 7
-                },
+          "words": {
+            "hello": {
+              self: "Hello",
+              translation: "Merhaba",
+              falseStates: ["Hoşça kal", "Teşekkürler", "İyi geceler"],
+              id: 0
+            },
+            "goodbye": {
+              self: "Goodbye",
+              translation: "Hoşça kal",
+              falseStates: ["Merhaba", "Lütfen", "Nasılsın"],
+              id: 1
+            },
+            "thank you": {
+              self: "Thank you",
+              translation: "Teşekkürler",
+              falseStates: ["Özür dilerim", "Günaydın", "Affedersiniz"],
+              id: 2
+            },
+            "good morning": {
+              self: "Good morning",
+              translation: "Günaydın",
+              falseStates: ["İyi akşamlar", "İyi geceler", "Tünaydın"],
+              id: 3
+            },
+            "good night": {
+              self: "Good night",
+              translation: "İyi geceler",
+              falseStates: ["Günaydın", "İyi günler", "Hoşça kal"],
+              id: 4
+            },
+            "please": {
+              self: "Please",
+              translation: "Lütfen",
+              falseStates: ["Teşekkürler", "Affedersiniz", "Rica ederim"],
+              id: 5
+            },
+            "sorry": {
+              self: "Sorry",
+              translation: "Özür dilerim",
+              falseStates: ["Teşekkürler", "Lütfen", "Rica ederim"],
+              id: 6
+            },
+            "how are you": {
+              self: "How are you",
+              translation: "Nasılsın",
+              falseStates: ["İyi günler", "Hoşça kal", "Teşekkürler"],
+              id: 7
+            },
+            "yes": {
+              self: "Yes",
+              translation: "Evet",
+              falseStates: ["Hayır", "Belki", "Tamam"],
+              id: 8
+            },
+            "no": {
+              self: "No",
+              translation: "Hayır",
+              falseStates: ["Evet", "Tamam", "Olabilir"],
+              id: 9
+            },
+            "maybe": {
+              self: "Maybe",
+              translation: "Belki",
+              falseStates: ["Kesinlikle", "Asla", "Her zaman"],
+              id: 10
+            },
+            "always": {
+              self: "Always",
+              translation: "Her zaman",
+              falseStates: ["Bazen", "Asla", "Nadiren"],
+              id: 11
+            },
+            "never": {
+              self: "Never",
+              translation: "Asla",
+              falseStates: ["Her zaman", "Bazen", "Sıklıkla"],
+              id: 12
+            },
+            "sometimes": {
+              self: "Sometimes",
+              translation: "Bazen",
+              falseStates: ["Her zaman", "Asla", "Nadiren"],
+              id: 13
+            },
+            "often": {
+              self: "Often",
+              translation: "Sıklıkla",
+              falseStates: ["Nadiren", "Asla", "Bazen"],
+              id: 14
+            },
+            "rarely": {
+              self: "Rarely",
+              translation: "Nadiren",
+              falseStates: ["Sıklıkla", "Her zaman", "Genellikle"],
+              id: 15
+            },
+            "water": {
+              self: "Water",
+              translation: "Su",
+              falseStates: ["Ateş", "Hava", "Toprak"],
+              id: 16
+            },
+            "food": {
+              self: "Food",
+              translation: "Yemek",
+              falseStates: ["İçecek", "Uyku", "Spor"],
+              id: 17
+            },
+            "house": {
+              self: "House",
+              translation: "Ev",
+              falseStates: ["Araba", "Okul", "Park"],
+              id: 18
+            },
+            "car": {
+              self: "Car",
+              translation: "Araba",
+              falseStates: ["Bisiklet", "Uçak", "Gemi"],
+              id: 19
+            },
+            "book": {
+              self: "Book",
+              translation: "Kitap",
+              falseStates: ["Kalem", "Defter", "Silgi"],
+              id: 20
+            },
+            "pen": {
+              self: "Pen",
+              translation: "Kalem",
+              falseStates: ["Kitap", "Defter", "Silgi"],
+              id: 21
+            },
+            "friend": {
+              self: "Friend",
+              translation: "Arkadaş",
+              falseStates: ["Düşman", "Yabancı", "Aile"],
+              id: 22
+            },
+            "family": {
+              self: "Family",
+              translation: "Aile",
+              falseStates: ["Arkadaş", "İş", "Okul"],
+              id: 23
+            },
+            "school": {
+              self: "School",
+              translation: "Okul",
+              falseStates: ["Hastane", "Market", "Park"],
+              id: 24
+            },
+            "work": {
+              self: "Work",
+              translation: "İş",
+              falseStates: ["Tatil", "Uyku", "Oyun"],
+              id: 25
+            },
+            "play": {
+              self: "Play",
+              translation: "Oynamak",
+              falseStates: ["Çalışmak", "Uyumak", "Yemek yemek"],
+              id: 26
+            },
+            "sleep": {
+              self: "Sleep",
+              translation: "Uyumak",
+              falseStates: ["Uyanmak", "Koşmak", "Konuşmak"],
+              id: 27
+            },
+            "eat": {
+              self: "Eat",
+              translation: "Yemek yemek",
+              falseStates: ["İçmek", "Uyumak", "Koşmak"],
+              id: 28
+            },
+            "drink": {
+              self: "Drink",
+              translation: "İçmek",
+              falseStates: ["Yemek", "Uyumak", "Yürümek"],
+              id: 29
+            },
+            "walk": {
+              self: "Walk",
+              translation: "Yürümek",
+              falseStates: ["Koşmak", "Oturmak", "Uyumak"],
+              id: 30
             }
+          }
         }
-    };
+      };
 
     useEffect(() => {
         startNewSet();
@@ -142,7 +280,7 @@ export default function PlayGround() {
         <div className="min-h-screen bg-gray-100 flex flex-col">
         <header className="bg-blue-600 text-white p-4 flex justify-between items-center">
             <h1 className="text-2xl font-bold">SwipeLingo</h1>
-            <Link className="text-sm bg-blue-500 px-3 py-1 rounded-full"
+            <Link className="text-sm text-white bg-blue-500 px-3 py-1 rounded-full"
             to="/playground">
                 Playground
             </Link>
