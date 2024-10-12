@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { auth, firestore, firebase } from '../firebase/firebase';
+import { auth, firestore } from '../firebase/firebase';
 import { User, Mail, Edit2, Camera, Award, Clock, Save } from 'lucide-react';
- 
+import Loading from '../Components/Loading';
 
 export default function ProfilePage() {
   const [user, setUser] = useState(null);
@@ -71,9 +71,7 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
+       <Loading />
     );
   }
 
