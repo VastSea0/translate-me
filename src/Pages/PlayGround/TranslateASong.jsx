@@ -87,7 +87,18 @@ export default function TranslateASong() {
             <h2 className="text-2xl font-semibold text-gray-700">Create A New Lyrics</h2>
             <p className="text-gray-600">Submit new song lyrics and start translating!</p>
           </div>
-          <form className="space-y-4">
+          {
+            !user ? (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <strong className="font-bold">You must be logged in to add a new lyric!</strong>
+              </div>
+            ) : (
+              <>
+              <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                <strong className="font-bold">You are logged in as {user.displayName}!</strong>
+              </div>
+              <hr className="my-6" />
+              <form className="space-y-4">
             <input
               type="text"
               name="title"
@@ -150,6 +161,11 @@ export default function TranslateASong() {
               Add Lyrics
             </button>
           </form>
+              </>
+            
+            )
+          }
+          
         </div>
         <hr className="my-8" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
