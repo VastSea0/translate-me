@@ -86,15 +86,18 @@ export default function Song() {
               👎 <span className="ml-2">{lyric.dislikes}</span>
             </button>
           </div>
-          <iframe
-            title={lyric.title}
-            width="560"
-            height="315"
-            src={lyric['yt-link']}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
+          <iframe 
+          width="560" 
+          height="315" 
+          src={`https://www.youtube.com/embed/${lyric['yt-link']}?si=34R2smBJtZ8mEy4R`} 
+          title="YouTube video player" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          referrerpolicy="strict-origin-when-cross-origin" 
+          allowfullscreen>
+            
+          </iframe>
+    
         </div>
         <div className="mt-6">
           <h2 className="text-2xl font-semibold text-gray-800">Comments</h2>
