@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { auth, firestore, firebase} from '../firebase/firebase';
-import { Menu, X, Home, Info, Settings, LogInIcon, User, LogOutIcon, GamepadIcon } from 'lucide-react';
+import { Menu, X, Home, Info, Settings, LogInIcon, User, LogOutIcon, GamepadIcon, GitBranchPlus } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function Header() {
@@ -29,6 +29,7 @@ export default function Header() {
     { icon: Home, text: 'Home', path: '/' },
     { icon: Info, text: 'About', path: '/about' },
     { icon: Settings, text: 'Settings', path: '/settings' },
+    { icon: GitBranchPlus, text: 'Contribute', path: '/contribute' },
     { icon: GamepadIcon, text: 'Playground', path: '/playground' },
      
   ];

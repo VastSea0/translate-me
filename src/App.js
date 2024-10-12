@@ -10,6 +10,7 @@ import LoginPage from "./Pages/Login";
 import ProfilePage from "./Pages/Profile";
 import PlayGround from "./Pages/PlayGround";
 import SwipeMe from "./Pages/PlayGround/SwipeMe";
+import ContributePage from "./Pages/Contribute";
 
 // TEST GAMES
 //import Game from "./Pages/PlayGround/tests/swipeMeAlg";
@@ -31,6 +32,7 @@ function App() {
           <Route path="/settings" element={<Settings />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/contribute" element={<ContributePage />} />
           <Route path="/playground" element={<PlayGround />} />
           <Route path="/playground/1" element={<SwipeMe />} />
           {/*

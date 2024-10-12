@@ -41,6 +41,14 @@ const games = [
     hashtags: ["#bulmaca", "#kelime", "#oyun"],
     tags: ["Eğlenceli", "Zorlayıcı"],
     id: 5
+  },
+  {
+    title: "Şarkı Çevirme",
+    description: "Sevdiğiniz şarkıları çevirin.",
+    points: 160,
+    hashtags: ["#şarkı", "#toplulık", "#oyun"],
+    tags: ["Eğlenceli", "Sosyal"],
+    id: 6
   }
 ];
 
