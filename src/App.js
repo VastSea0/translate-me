@@ -9,12 +9,10 @@ import About from "./Pages/About";
 import LoginPage from "./Pages/Login";
 import ProfilePage from "./Pages/Profile";
 import PlayGround from "./Pages/PlayGround";
-import SwipeMe from "./Pages/PlayGround/SwipeMe";
 import ContributePage from "./Pages/Contribute";
-
-// TEST GAMES
-//import Game from "./Pages/PlayGround/tests/swipeMeAlg";
-
+import TranslateASong from "./Pages/PlayGround/TranslateASong";
+import SwipeMe from "./Pages/PlayGround/SwipeMe";
+import Song from "./Pages/Song"; 
 
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
@@ -35,6 +33,8 @@ function App() {
           <Route path="/contribute" element={<ContributePage />} />
           <Route path="/playground" element={<PlayGround />} />
           <Route path="/playground/1" element={<SwipeMe />} />
+          <Route path="/playground/6" element={<TranslateASong />} />
+          <Route path="/lyric/:id" element={<Song />} /> 
           {/*
           Test Routes
           <Route path="/tests/game/swipe" element={<Game />} />
