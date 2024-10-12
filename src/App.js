@@ -12,6 +12,7 @@ import PlayGround from "./Pages/PlayGround";
 import ContributePage from "./Pages/Contribute";
 import TranslateASong from "./Pages/PlayGround/TranslateASong";
 import SwipeMe from "./Pages/PlayGround/SwipeMe";
+import NigongoSensi from "./Pages/PlayGround/NihongoSensei";
 import Song from "./Pages/Song"; 
 
 import Header from "./Components/Header";
@@ -33,6 +34,7 @@ function App() {
           <Route path="/contribute" element={<ContributePage />} />
           <Route path="/playground" element={<PlayGround />} />
           <Route path="/playground/1" element={<SwipeMe />} />
+          <Route path="/playground/2" element={<NigongoSensi />} />
           <Route path="/playground/6" element={<TranslateASong />} />
           <Route path="/lyric/:id" element={<Song />} /> 
           {/*

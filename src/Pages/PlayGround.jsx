@@ -5,25 +5,25 @@ const games = [
   {
     title: "SwipeLingo",
     description: "Kelime kaydırma oyunu.",
-    points: 100,
+    points: 30,
     hashtags: ["#kelime", "#kaydırma", "#oyun"],
     tags: ["Eğlenceli", "Zorlayıcı"],
     id: 1
   },
   {
-    title: "4'lü Olasılıklı Kelime Seçme",
-    description: "Doğru kelimeyi seçin.",
-    points: 150,
-    hashtags: ["#kelime", "#seçme", "#oyun"],
+    title: "Nihongo Sensei",
+    description: "Geleneksel Japon ses sistemlerini öğrenin",
+    points: 170,
+    hashtags: ["#Japonca", "#Hiragana", "#Katakana"],
     tags: ["Eğitici", "Zor"],
     id: 2
   },
   {
-    title: "Cümle Çevirme",
-    description: "Cümleleri doğru çevirin.",
+    title: "数学の先生 (sūgaku no sensei) ",
+    description: "Japonca sayıları öğrenin.",
     points: 200,
-    hashtags: ["#çeviri", "#cümle", "#oyun"],
-    tags: ["Eğitici", "Öğretici"],
+    hashtags: ["#sayısal", "#japon", "#kanji"],
+    tags: ["Eğitici", "Japonca"],
     id : 3
   },
   {
@@ -63,7 +63,7 @@ export default function PlayGround() {
             <p className="text-gray-700 mb-4">{game.description}</p>
             <div className="flex items-center mb-4">
               <span className="bg-blue-500 text-white text-sm font-semibold mr-2 px-2.5 py-0.5 rounded">
-                {game.points} Puan
+                {game.points} Kelime/Karakter
               </span>
               {game.hashtags.map((hashtag, idx) => (
                 <span
