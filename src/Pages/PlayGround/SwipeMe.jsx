@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import PlayGroundHeader from "../../Components/PlayGroundHeader";
 
 export default function PlayGround() {
     const [firstWord, setFirstWord] = useState(false);
@@ -278,13 +279,8 @@ export default function PlayGround() {
 
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col">
-        <header className="bg-blue-600 text-white p-4 flex justify-between items-center">
-            <h1 className="text-2xl font-bold">SwipeLingo</h1>
-            <Link className="text-sm text-white bg-blue-500 px-3 py-1 rounded-full"
-            to="/playground">
-                Playground
-            </Link>
-        </header>
+
+            <PlayGroundHeader name={"Swipelingo"} />
     
         <main className="flex-grow flex flex-col items-center justify-center p-4">
             <AnimatePresence>
