@@ -17,6 +17,10 @@ export default function About(){
               <p>
                 This project also includes JavaScript test scripts in its source code to provide footnotes for other developers in the learning process. These test scripts and apps are specific scripts created directly from the project itself
               </p>
+              <hr />
+              <footer className="blockquote-footer">
+                <cite title="Source Title">Translate Me! Project By Egehan KAHRAMAN with love</cite>
+              </footer>
             </div>
           </div>
         </div>
