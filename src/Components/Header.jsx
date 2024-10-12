@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { auth, firestore, firebase} from '../firebase/firebase';
-import { Menu, X, Home, Info, Settings, LogInIcon, User, LogOutIcon, GamepadIcon, GitBranchPlus } from 'lucide-react';
+import { Menu, X, Home, Info, Settings, LogInIcon, User, LogOutIcon, GamepadIcon, GitBranchPlus, } from 'lucide-react';
+import { Discord } from 'react-bootstrap-icons';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function Header() {
@@ -31,6 +32,7 @@ export default function Header() {
     { icon: Settings, text: 'Settings', path: '/settings' },
     { icon: GitBranchPlus, text: 'Contribute', path: '/contribute' },
     { icon: GamepadIcon, text: 'Playground', path: '/playground' },
+    { icon: Discord, text: 'Discord Server', path: 'https://discord.com/invite/ZVHmv9dJRf' },
      
   ];
 
