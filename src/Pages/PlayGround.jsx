@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import { Gamepad2Icon } from "lucide-react";
 const games = [
@@ -8,6 +8,7 @@ const games = [
     points: 30,
     hashtags: ["#kelime", "#kaydırma", "#oyun"],
     tags: ["Eğlenceli", "Zorlayıcı"],
+    "language": "english",
     id: 1
   },
   {
@@ -16,6 +17,7 @@ const games = [
     points: 170,
     hashtags: ["#Japonca", "#Hiragana", "#Katakana"],
     tags: ["Eğitici", "Zor"],
+    "language": "japanese",
     id: 2
   },
   {
@@ -24,6 +26,7 @@ const games = [
     points: 200,
     hashtags: ["#sayısal", "#japon", "#kanji"],
     tags: ["Eğitici", "Japonca"],
+    "language": "japanese",
     id : 3
   },
   {
@@ -32,6 +35,7 @@ const games = [
     points: 120,
     hashtags: ["#harf", "#seçme", "#oyun"],
     tags: ["Eğitici", "Japonca"], 
+    "language": "japanese",
     id: 4
   },
   {
@@ -40,6 +44,7 @@ const games = [
     points: 180,
     hashtags: ["#bulmaca", "#kelime", "#oyun"],
     tags: ["Eğlenceli", "Zorlayıcı"],
+    "language": "turkish",
     id: 5
   },
   {
@@ -48,16 +53,43 @@ const games = [
     points: 160,
     hashtags: ["#şarkı", "#toplulık", "#oyun"],
     tags: ["Eğlenceli", "Sosyal"],
+    "language": "all",
     id: 6
   }
 ];
 
 export default function PlayGround() {
+  const [languageFilter, setLanguageFilter] = useState("all");
+
+
+  const handleLanguageFilterChange = (e) => {
+    setLanguageFilter(e.target.value);
+  }
+
+  const filteredGames = languageFilter === "all" 
+    ? games 
+    : games.filter(game => game.language === languageFilter);
+
   return (
     <div className="container mx-auto mt-5 p-4">
       <h2 className="text-3xl font-bold mb-4">PlayGround</h2>
+      <div className="mb-4 flex justify-center text-center">
+        <select 
+          value={languageFilter} 
+          onChange={handleLanguageFilterChange}
+          className="bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="all">All</option>
+          <option value="english">English</option>
+          <option value="japanese">Japanese</option>
+          <option value="turkish">Turkish</option>
+          <option value="german">German</option>
+          <option value="french">French</option>
+          <option value="spanish">Spanish</option>
+        </select>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-        {games.map((game, index) => (
+        {filteredGames.map((game, index) => (
           <div key={index} className="bg-white rounded-lg shadow-lg p-6">
             <h3 className="text-2xl font-bold mb-2">{game.title}</h3>
             <p className="text-gray-700 mb-4">{game.description}</p>
@@ -86,13 +118,11 @@ export default function PlayGround() {
               <Link
                 to={`/playground/${game.id}`}
                 className="bg-blue-600 text-white text-sm font-semibold px-2.5 py-1 rounded ml-auto"
-                >
+              >
                 <span className="">
-                    <Gamepad2Icon size={32} />
+                  <Gamepad2Icon size={32} />
                 </span>
-            
-                </Link>
-            
+              </Link>
             </div>
           </div>
         ))}
