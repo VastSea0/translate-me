@@ -4,7 +4,8 @@ import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import PlayGroundHeader from "../../Components/PlayGroundHeader";
 import Words from "./JapaneseStrings";
-import { set } from "firebase/database";
+import { firestore , auth} from "../../firebase/firebase";
+
 
 export default function NigongoSensi() {
     const [firstWord, setFirstWord] = useState(false);
@@ -20,7 +21,40 @@ export default function NigongoSensi() {
     const [showMessage, setShowMessage] = useState(false);
     const [writingSystem, setWritingSystem] = useState('hiragana');
     const [cardColor, setCardColor] = useState('bg-blue-500');
+    const [userScore, setUserScore] = useState(0);
+    const [japaneseScore, setJapaneseScore] = useState(0);
+    const [user, setUser] = useState(null);
 
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((authUser) => {
+            if (authUser) {
+                setUser(authUser);
+            } else {
+                setUser(null);
+            }
+        });
+        return () => unsubscribe();
+    }, [setUser]);
+
+
+    useEffect(() => {
+        if (user) {
+          const userRef = firestore.collection('users').doc(user.uid);
+          userRef.get().then((doc) => {
+            if (doc.exists) {
+              const data = doc.data();
+              if (data.userScore !== undefined) {
+                setUserScore(data.userScore);
+              }
+              if (data.japaneseScore !== undefined) {
+                setJapaneseScore(data.japaneseScore);
+              }
+              
+            }
+          });
+        }
+      }, [user]);
 
 
     useEffect(() => {
@@ -71,6 +105,26 @@ export default function NigongoSensi() {
 
     const handleOptionClick = (selectedOption) => {
         if (selectedOption === currentWord.translation) {
+
+           if (user) { const userRef = firestore.collection('users').doc(user.uid);
+            userRef.get().then((doc) => {
+                if (doc.exists) {
+                  const data = doc.data();
+                  if (data.userScore !== undefined) {
+                    setUserScore(data.userScore);
+                    setJapaneseScore(data.japaneseScore);
+                  }
+                  
+                }
+              });
+
+            userRef.update(
+                { 
+                    userScore: userScore + 1,
+                    japaneseScore: japaneseScore + 1 
+                }
+            );
+            }
             setMessage('Tebrikler! Doğru cevap.');
             setCardColor('bg-green-500');
             if (currentWordIndex + 1 < Object.keys(Words.japanese[writingSystem]).length) {
@@ -177,8 +231,14 @@ export default function NigongoSensi() {
     
             <div className="w-full max-w-md">
                 <div className="mb-4 text-center">
+                <h4>
+                        {currentWordIndex + 1} / {Object.keys(Words.japanese[writingSystem]).length}
+                    </h4>
                     <p className="text-lg font-semibold">
                         {currentWord?.self}
+                        
+                        {user ?  <span className="text-red-500"> ({userScore})</span>  :  'Skor almak için giriş yapın'}  
+                      
                     </p>
                     <p className="text-sm text-gray-600">
                         Doğru çeviriyi seçmek için kartı kaydırın

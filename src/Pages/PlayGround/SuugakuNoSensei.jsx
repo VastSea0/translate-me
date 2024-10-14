@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Message from '../../Components/Message';
 import PlayGroundHeader from '../../Components/PlayGroundHeader';
+import { firestore, auth } from '../../firebase/firebase';
 
 const baseNumbers = [
     { japanese: "いち", kanji: "一", romaji: "ichi", english: "1" },
@@ -19,7 +20,10 @@ const baseNumbers = [
     { japanese: "せん", kanji: "千", romaji: "sen", english: "1000" },
 ];
 
+
+
 function generateNumbers() {
+    
     const numbers = [...baseNumbers];
     
     for (let i = 12; i <= 20; i++) {
@@ -68,7 +72,41 @@ export default function AdvancedNumberPuzzle() {
     const [level, setLevel] = useState(1); 
     const [showMessage, setShowMessage] = useState(false);
     const [currentMNumber, setCurrentMNumber] = useState(null);
+    const [userScore, setUserScore] = useState(0);
+    const [japaneseScore, setJapaneseScore] = useState(0);
+    const [user, setUser] = useState(null);
+    const [message, setMessage] = useState('');
+
     
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((authUser) => {
+            if (authUser) {
+                setUser(authUser);
+            } else {
+                setUser(null);
+            }
+        });
+        return () => unsubscribe();
+    }, [setUser]);
+
+    useEffect(() => {
+        if (user) {
+          const userRef = firestore.collection('users').doc(user.uid);
+          userRef.get().then((doc) => {
+            if (doc.exists) {
+              const data = doc.data();
+              if (data.userScore !== undefined) {
+                setUserScore(data.userScore);
+              }
+              if (data.japaneseScore !== undefined) {
+                setJapaneseScore(data.japaneseScore);
+              }
+              
+            }
+          });
+        }
+      }, [user]);
+
     useEffect(() => {
         resetGame();
     }, []);
@@ -89,7 +127,10 @@ export default function AdvancedNumberPuzzle() {
 
     useEffect(() => {
         if (timeLeft === 0) {
-            alert('Süre doldu! Skorunuz: ' + score);
+
+            //alert('Süre doldu! Skorunuz: ' + score);
+           setMessage(`Süre doldu! Skorunuz: ${score}`);
+  
             resetGame();
         }
     }, [timeLeft]);
@@ -117,15 +158,36 @@ export default function AdvancedNumberPuzzle() {
         const currentNumber = shuffledNumbers[currentIndex];
         if (option === currentNumber.english) {
             setScore(score + 1);
+            if (user) { const userRef = firestore.collection('users').doc(user.uid);
+                userRef.get().then((doc) => {
+                    if (doc.exists) {
+                      const data = doc.data();
+                      if (data.userScore !== undefined) {
+                        setUserScore(data.userScore);
+                        setJapaneseScore(data.japaneseScore);
+                      }
+                      
+                    }
+                  });
+    
+                userRef.update(
+                    { 
+                        userScore: userScore + 1,
+                        japaneseScore: japaneseScore + 1 
+                    }
+                );
+                }
             if (currentIndex < shuffledNumbers.length - 1) {
                 setCurrentIndex(currentIndex + 1);
             } else {
-                alert('Tebrikler! Tüm seviyeleri tamamladınız!');
+               
+                setMessage(`Tebrikler! Tüm seviyeleri tamamladınız! Skorunuz: ${score}`);
                 resetGame();
             }
         } else {
             setCurrentMNumber(currentNumber);
             setShowMessage(true);
+            setMessage(`Yanlış! Doğru cevap: ${currentNumber.english}`);
             setTimeout(() => {
                 setShowMessage(false);
             }, 2000);
@@ -147,7 +209,15 @@ export default function AdvancedNumberPuzzle() {
             <PlayGroundHeader name={"数学の先生 (sūgaku no sensei)"} />
             <main className="flex-grow flex flex-col items-center justify-center p-4">
                 <h1 className="text-3xl font-bold mb-6">数学の先生 (sūgaku no sensei)</h1>
-                {showMessage && ( <Message message={`Yanlış! Doğru cevap: ${currentMNumber.english}`} />)}
+                <AnimatePresence>
+                {showMessage && (
+                   <Message message={message} />
+                )}
+                 </AnimatePresence>
+                {
+
+                //showMessage && ( <Message message={`Yanlış! Doğru cevap: ${currentMNumber.english}`} />)
+                }
                 {shuffledNumbers.length > 0 && currentIndex < shuffledNumbers.length && (
                     <div className="bg-white p-6 rounded-lg shadow-lg text-center">
                         <h2 className="text-2xl font-semibold mb-4">Bu sayı nedir? "{shuffledNumbers[currentIndex].kanji}"</h2>
