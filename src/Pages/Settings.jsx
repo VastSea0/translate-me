@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronRight, Moon, Bell, Lock, User, Smartphone, ChevronLeft, Mail, Terminal, ToggleLeft, Database, Bug , Award} from 'lucide-react';
+import { ChevronRight, Moon, Bell, Lock,Info, User, Smartphone, ChevronLeft, Mail, Terminal, ToggleLeft, Database, Bug , Award} from 'lucide-react';
 import { UserScore, UserMail, UserDisplayName, UserIsSignedIn, useAddNewUserData, UserFetchSpecificUserData } from '../Components/PartsOfUser';
 import Loading from '../Components/Loading';
 import { firestore } from '../firebase/firebase';
@@ -145,6 +145,12 @@ const DeveloperOptions = ({ onBack }) => {
           icon={<ToggleLeft className="text-yellow-500" size={24} />}
           title="API Endpoint'leri"
           description="(YAKINDA!)"
+        />
+        <hr />
+        <SettingsItem
+          icon={<Info className="text-yellow-500" size={24} />}
+          title="Uygulama Sürümü"
+          description="Pre-Alpha v0.0.1:4 (14.10.2024)"
         />
       </div>
     </div>
