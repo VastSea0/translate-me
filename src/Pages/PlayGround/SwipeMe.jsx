@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import PlayGroundHeader from "../../Components/PlayGroundHeader";
 import Message from "../../Components/Message";
 import Words from "./EnglishStrings";
+import { auth , firestore} from "../../firebase/firebase";
 
 export default function PlayGround() {
     const [firstWord, setFirstWord] = useState(false);
@@ -18,6 +19,40 @@ export default function PlayGround() {
     const [countdown, setCountdown] = useState(5);
     const [showCountdown, setShowCountdown] = useState(true);
     const [showMessage, setShowMessage] = useState(false);
+    const [userScore, setUserScore] = useState(0);
+    const [user, setUser] = useState(null);
+    const [language, setLanguage] = useState('english');
+    const [cardColor, setCardColor] = useState('bg-blue-500');
+    const [englishScore, setEnglishScore] = useState(0);
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((authUser) => {
+            if (authUser) {
+                setUser(authUser);
+            } else {
+                setUser(null);
+            }
+        });
+        return () => unsubscribe();
+    }, [setUser]);
+
+    useEffect(() => {
+        if (user) {
+          const userRef = firestore.collection('users').doc(user.uid);
+          userRef.get().then((doc) => {
+            if (doc.exists) {
+              const data = doc.data();
+              if (data.userScore !== undefined) {
+                setUserScore(data.userScore);
+              }
+              if (data.englishScore !== undefined) {
+                setEnglishScore(data.englishScore);
+              }
+              
+            }
+          });
+        }
+      }, [user]);
 
 
 
@@ -35,7 +70,7 @@ export default function PlayGround() {
     }, [countdown, showCountdown]);
 
     const startNewSet = () => {
-        const shuffledWords = Object.values(Words.english.words).sort(() => Math.random() - 0.5);
+        const shuffledWords = Object.values(Words[language].words).sort(() => Math.random() - 0.5);
         setCurrentWordIndex(0);
         setGameOver(false);
         setMessage('');
@@ -65,12 +100,36 @@ export default function PlayGround() {
 
     const handleOptionClick = (selectedOption) => {
         if (selectedOption === currentWord.translation) {
-            setMessage('Tebrikler! Doğru cevap.');
-            if (currentWordIndex + 1 < Object.keys(Words.english.words).length) {
+            if (user){
+                const userRef = firestore.collection('users').doc(user.uid);
+                userRef.get().then((doc) => {
+                    if (doc.exists) {
+                      const data = doc.data();
+                      if (data.userScore !== undefined) {
+                        setUserScore(data.userScore);
+                        setEnglishScore(data.englishScore);
+                      }
+                      
+                    }
+                  });
+    
+                userRef.update(
+                    { 
+                        userScore: userScore + 1,
+                        englishScore: englishScore + 1 
+                    }
+                );
+            }
+
+    
+            setCardColor('bg-green-500');
+            setMessage(`Tebrikler! Doğru cevap.` );
+
+            if (currentWordIndex + 1 < Object.keys(Words[language].words).length) {
                 setShowMessage(true);
                 setTimeout(() => {
                     setCurrentWordIndex(currentWordIndex + 1);
-                    setNextWord(Object.values(Words.english.words)[currentWordIndex + 1]);
+                    setNextWord(Object.values(Words[language].words)[currentWordIndex + 1]);
                     setMessage('');
                     setShowMessage(false);
                 }, 1500);
@@ -79,6 +138,7 @@ export default function PlayGround() {
                 setGameOver(true);
             }
         } else {
+            setCardColor('bg-red-500');
             setMessage('Üzgünüm, yanlış cevap. Tekrar deneyin.');
             setShowMessage(true);
             setTimeout(() => {
@@ -149,8 +209,14 @@ export default function PlayGround() {
     
             <div className="w-full max-w-md">
                 <div className="mb-4 text-center">
+                    <h4>
+                        {currentWordIndex + 1} / {Object.keys(Words[language].words).length}
+                    </h4>
+                    
                     <p className="text-lg font-semibold">
                         {currentWord?.self}
+                        {user ?  <span className="text-red-500"> ({userScore})</span>  :  'Skor almak için giriş yapın'}  
+                       
                     </p>
                     <p className="text-sm text-gray-600">
                         Doğru çeviriyi seçmek için kartı kaydırın
@@ -159,7 +225,7 @@ export default function PlayGround() {
     
                 <div className="relative h-80 w-full max-w-sm mx-auto">
     <div className="absolute inset-y-0 left-0 w-1/3 flex items-center justify-center z-0">
-        <div className={`w-full h-full ${firstWord ? 'bg-green-500' : 'bg-blue-500'} rounded-lg flex items-center justify-center transition-colors duration-300`}>
+        <div className={`w-full h-full ${firstWord ? cardColor : 'bg-blue-500'} rounded-lg flex items-center justify-center transition-colors duration-300`}>
             <p className="text-xl font-bold text-white">
                 {options[0]}
             </p>
@@ -197,7 +263,7 @@ export default function PlayGround() {
         </div>
     </motion.div>
     <div className="absolute inset-y-0 right-0 w-1/3 flex items-center justify-center z-0">
-        <div className={`w-full h-full ${secondWord ? 'bg-green-500' : 'bg-blue-500'} rounded-lg flex items-center justify-center transition-colors duration-300`}>
+        <div className={`w-full h-full ${secondWord ? cardColor : 'bg-blue-500'} rounded-lg flex items-center justify-center transition-colors duration-300`}>
             <p className="text-xl font-bold text-white">
                 {options[1]}
             </p>
