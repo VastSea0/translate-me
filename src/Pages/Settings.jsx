@@ -318,7 +318,7 @@ const DeveloperOptions = ({ onBack, darkMode, testMode, setTestMode, toggleDarkM
           <SettingsItem
             icon={<Info className="text-yellow-500" size={24} />}
             title="Uygulama Sürümü"
-            description="Pre-Alpha v0.0.1:4 (14.10.2024)"
+            description="Pre-Alpha v0.0.2:2 (19.10.2024)"
             darkMode={darkMode}
           />
         </div>
