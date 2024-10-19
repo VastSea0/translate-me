@@ -161,3 +161,23 @@ export function UserFetchSpecificUserData({ field }) {
     return data !== null ? <p>Siz bir geliştiricisiniz</p> : 'not found data';
 }
 
+export  function UserDarkMode() {
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(async (authUser) => {
+            if (authUser) {
+                const userRef = firestore.collection('users').doc(authUser.uid);
+                const userData = await userRef.get();
+                if (userData.exists) {
+                    const data = userData.data();
+                    setUser(data);
+                }
+            }
+        });
+
+        return () => unsubscribe();
+    }, [setUser]);
+
+    return user ? false : false;
+}
