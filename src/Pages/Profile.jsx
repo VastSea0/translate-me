@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { auth, firestore } from '../firebase/firebase';
-import { User, Mail, Edit2, Camera, Award, Clock, Save } from 'lucide-react';
+import { User, Mail, Edit2, Save, Award, Clock} from 'lucide-react';
+import { Fire } from 'react-bootstrap-icons';
+import { motion } from 'framer-motion';
 import Loading from '../Components/Loading';
 
 export default function ProfilePage() {
@@ -70,56 +72,90 @@ export default function ProfilePage() {
   };
 
   if (loading) {
-    return (
-       <Loading />
-    );
+    return <Loading />;
   }
 
   if (!user) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div variant="destructive">
-          <div>
-            Bu sayfayı görüntülemek için giriş yapmanız gerekmektedir.
-          </div>
+      <motion.div 
+        initial={{ opacity: 0 }} 
+        animate={{ opacity: 1 }} 
+        exit={{ opacity: 0 }}
+        className="container mx-auto px-4 py-8 text-center"
+      >
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+          <strong className="font-bold">Hata!</strong>
+          <span className="block sm:inline"> Bu sayfayı görüntülemek için giriş yapmanız gerekmektedir.</span>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        when: "beforeChildren", 
+        staggerChildren: 0.1 
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: { type: 'spring', stiffness: 100 }
+    }
+  };
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
-        <div className="relative h-48 bg-blue-600">
-          <div className="absolute -bottom-16 left-8">
-            <div className="w-32 h-32 rounded-full border-4 border-white bg-gray-200 flex items-center justify-center">
-              <User size={64} className="text-gray-400" />
+    <motion.div 
+      className=" bg-green-50 min-h-screen"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <motion.div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden" variants={itemVariants}>
+        <div className="relative h-48 bg-green-500">
+          <motion.div 
+            className="absolute -bottom-16 left-8"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+          >
+            <div className="w-32 h-32 rounded-full border-4 border-white bg-yellow-400 flex items-center justify-center">
+              <User size={64} className="text-white" />
             </div>
-          </div>
+          </motion.div>
         </div>
 
         <div className="pt-20 pb-8 px-8">
-          <div className="flex justify-between items-start">
+          <motion.div className="flex justify-between items-start" variants={itemVariants}>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold text-gray-900">
                 {editing ? (
                   <input
                     type="text"
                     name="displayName"
                     value={formData.displayName}
                     onChange={handleChange}
-                    className="border-b border-gray-300 focus:border-blue-500 focus:outline-none"
+                    className="border-b-2 border-green-500 focus:outline-none focus:border-green-700 bg-transparent"
                   />
                 ) : user.displayName}
               </h1>
-              <div className="mt-1 flex items-center text-gray-500">
+              <div className="mt-2 flex items-center text-gray-600">
                 <Mail size={16} className="mr-2" />
                 {user.email}
               </div>
             </div>
-            <button
+            <motion.button
               onClick={() => setEditing(!editing)}
-              className="flex items-center px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50"
+              className="flex items-center px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-600 transition duration-300"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               {editing ? (
                 <Save size={16} className="mr-2" />
@@ -127,11 +163,11 @@ export default function ProfilePage() {
                 <Edit2 size={16} className="mr-2" />
               )}
               {editing ? 'Kaydet' : 'Düzenle'}
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
 
           {editing ? (
-            <form onSubmit={handleSubmit} className="mt-6">
+            <motion.form onSubmit={handleSubmit} className="mt-6" variants={itemVariants}>
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
@@ -142,72 +178,102 @@ export default function ProfilePage() {
                     rows={4}
                     value={formData.bio}
                     onChange={handleChange}
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                    className="mt-1 block w-full border-2 border-green-300 rounded-md shadow-sm p-2 focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50"
                   />
                 </div>
                 <div className="flex justify-end">
-                  <button
+                  <motion.button
                     type="submit"
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    className="px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
                     Değişiklikleri Kaydet
-                  </button>
+                  </motion.button>
                 </div>
               </div>
-            </form>
+            </motion.form>
           ) : (
-            <div className="mt-6">
-              <h2 className="text-lg font-semibold text-gray-900">Hakkımda</h2>
+            <motion.div className="mt-6" variants={itemVariants}>
+              <h2 className="text-xl font-semibold text-gray-900">Hakkımda</h2>
               <p className="mt-2 text-gray-600">
                 {user.bio || 'Henüz bir bio eklenmemiş.'}
               </p>
-            </div>
+            </motion.div>
           )}
 
           {updateSuccess && (
-            <div className="mt-4">
-              <div>
-                Profiliniz başarıyla güncellendi!
-              </div>
-            </div>
+            <motion.div 
+              className="mt-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+            >
+              Profiliniz başarıyla güncellendi!
+            </motion.div>
           )}
 
           {updateError && (
-            <div variant="destructive" className="mt-4">
-              <div>{updateError}</div>
-            </div>
+            <motion.div 
+              className="mt-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+            >
+              {updateError}
+            </motion.div>
           )}
         </div>
 
-        <div className="border-t border-gray-200">
+        <motion.div className="border-t border-gray-200" variants={itemVariants}>
           <div className="px-8 py-6">
-            <h2 className="text-lg font-semibold text-gray-900">İstatistikler</h2>
+            <h2 className="text-2xl font-semibold text-gray-900">İstatistikler</h2>
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
-              <div className="bg-gray-50 p-4 rounded-lg">
+              <motion.div 
+                className="bg-yellow-100 p-4 rounded-lg shadow"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 10 }}
+              >
                 <div className="flex items-center">
-                  <Award className="h-6 w-6 text-blue-500" />
-                  <span className="ml-2 text-sm text-gray-500">Skor</span>
+                  <Award className="h-8 w-8 text-yellow-500" />
+                  <span className="ml-2 text-sm font-medium text-gray-500">Skor</span>
                 </div>
-                <div className="mt-2 text-2xl font-semibold">
+                <div className="mt-2 text-3xl font-bold text-gray-900">
                   {user.userScore || 0}
                 </div>
-              </div>
+              </motion.div>
               
-              <div className="bg-gray-50 p-4 rounded-lg">
+              <motion.div 
+                className="bg-blue-100 p-4 rounded-lg shadow"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 10 }}
+              >
                 <div className="flex items-center">
-                  <Clock className="h-6 w-6 text-blue-500" />
-                  <span className="ml-2 text-sm text-gray-500">Katılım Tarihi</span>
+                  <Clock className="h-8 w-8 text-blue-500" />
+                  <span className="ml-2 text-sm font-medium text-gray-500">Katılım Tarihi</span>
                 </div>
-                <div className="mt-2 text-sm">
+                <div className="mt-2 text-sm font-medium text-gray-900">
                   {user.createdAt ? new Date(user.createdAt.toDate()).toLocaleDateString() : 'Bilinmiyor'}
                 </div>
-              </div>
+              </motion.div>
 
-              
+              <motion.div 
+                className="bg-red-100 p-4 rounded-lg shadow"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 10 }}
+              >
+                <div className="flex items-center">
+                  <Fire className="h-8 w-8 text-red-500" />
+                  <span className="ml-2 text-sm font-medium text-gray-500">Öğrenme Serisi</span>
+                </div>
+                <div className="mt-2 text-3xl font-bold text-gray-900">
+                  {user.learningStreak || 0} gün
+                </div>
+              </motion.div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 }

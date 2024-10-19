@@ -5,6 +5,7 @@ import { auth, firebase, firestore } from '../firebase/firebase';
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const [darkMode, setDarkMode] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -147,7 +148,7 @@ export default function LoginPage() {
   },[auth]);
 
   return (
-    <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className={`min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8  ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'} `}>
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Hesabınıza giriş yapın
