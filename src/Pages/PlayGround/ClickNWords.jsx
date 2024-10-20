@@ -17,16 +17,22 @@ const ClickNWords = () => {
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [user, setUser] = useState(null);
 
+  
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((authUser) => {
-        if (authUser) {
-            setUser(authUser);
-        } else {
-            setUser(null);
-        }
-    });
-    return () => unsubscribe();
-}, [setUser]);
+      const unsubscribe = auth.onAuthStateChanged(async (authUser) => {
+          if (authUser) {
+              const userRef = firestore.collection('users').doc(authUser.uid);
+              const userData = await userRef.get();
+              if (userData.exists) {
+                  const data = userData.data();
+                  setUser(data);
+              }
+          }
+      });
+
+      return () => unsubscribe();
+  }, [setUser]);
+
 
  
   useEffect(() => {
@@ -95,6 +101,8 @@ const ClickNWords = () => {
   }, []);
 
   useEffect(() => {
+    
+    
     let interval;
     if (isTimerRunning && timer > 0) {
       interval = setInterval(() => {
@@ -106,8 +114,8 @@ const ClickNWords = () => {
         if (user) {
           await firestore.collection('users').doc(user.uid).update(
             { 
-              userScore: (user.userScore || 0) + score,
-              englishScore: (user.englishScore || 0) + score
+              userScore:  user.userScore  + score,
+              englishScore: user.englishScore  + score
              }
           );
         }
@@ -134,6 +142,7 @@ const ClickNWords = () => {
   };
 
   const handleWordClick = (word) => {
+     
     if (!isTimerRunning) {
       setIsTimerRunning(true);
     }
