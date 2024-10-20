@@ -56,13 +56,13 @@ export default function PlayGround() {
       id: 3
     },
     {
-      title: "Harf Seçme (Japonca)",
-      description: "Doğru harfi seçin.",
+      title: "Click N Words",
+      description: "Boşlukları doldurun.",
       points: 120,
-      hashtags: ["#harf", "#seçme"],
-      tags: ["Eğitici", "Japonca"],
-      language: "japanese",
-      disabled: true,
+      hashtags: ["#cümle", "#seçme"],
+      tags: ["Cümle", "İngilizce"],
+      language: "english",
+      disabled: false,
       id: 4
     },
     {

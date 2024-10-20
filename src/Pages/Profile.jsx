@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { auth, firestore } from '../firebase/firebase';
-import { User, Mail, Edit2, Save, Award, Clock} from 'lucide-react';
+import { User, Mail, Edit2, Save, Award, Clock, ArrowLeft } from 'lucide-react';
 import { Fire } from 'react-bootstrap-icons';
 import { motion } from 'framer-motion';
 import Loading from '../Components/Loading';
@@ -113,29 +113,29 @@ export default function ProfilePage() {
 
   return (
     <motion.div 
-      className=" bg-green-50 min-h-screen"
+      className="bg-green-50 min-h-screen"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-      <motion.div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden" variants={itemVariants}>
-        <div className="relative h-48 bg-green-500">
+      <motion.div className="max-w-full md:max-w-3xl mx-auto bg-white shadow-lg overflow-hidden" variants={itemVariants}>
+        <div className="relative h-32 md:h-48 bg-green-500">
           <motion.div 
-            className="absolute -bottom-16 left-8"
+            className="absolute -bottom-12 md:-bottom-16 left-4 md:left-8"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: 'spring', stiffness: 260, damping: 20 }}
           >
-            <div className="w-32 h-32 rounded-full border-4 border-white bg-yellow-400 flex items-center justify-center">
-              <User size={64} className="text-white" />
+            <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white bg-yellow-400 flex items-center justify-center">
+              <User size={48} className="text-white" />
             </div>
           </motion.div>
         </div>
 
-        <div className="pt-20 pb-8 px-8">
-          <motion.div className="flex justify-between items-start" variants={itemVariants}>
+        <div className="pt-16 md:pt-20 pb-6 md:pb-8 px-4 md:px-8">
+          <motion.div className="flex flex-col md:flex-row justify-between items-start" variants={itemVariants}>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
                 {editing ? (
                   <input
                     type="text"
@@ -153,7 +153,7 @@ export default function ProfilePage() {
             </div>
             <motion.button
               onClick={() => setEditing(!editing)}
-              className="flex items-center px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-600 transition duration-300"
+              className="mt-4 md:mt-0 flex items-center px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-600 transition duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -226,8 +226,8 @@ export default function ProfilePage() {
         </div>
 
         <motion.div className="border-t border-gray-200" variants={itemVariants}>
-          <div className="px-8 py-6">
-            <h2 className="text-2xl font-semibold text-gray-900">İstatistikler</h2>
+          <div className="px-4 md:px-8 py-6">
+            <h2 className="text-xl md:text-2xl font-semibold text-gray-900">İstatistikler</h2>
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
               <motion.div 
                 className="bg-yellow-100 p-4 rounded-lg shadow"
@@ -235,10 +235,10 @@ export default function ProfilePage() {
                 transition={{ type: 'spring', stiffness: 300, damping: 10 }}
               >
                 <div className="flex items-center">
-                  <Award className="h-8 w-8 text-yellow-500" />
-                  <span className="ml-2 text-sm font-medium text-gray-500">Skor</span>
+                  <Award className="h-6 w-6 md:h-8 md:w-8 text-yellow-500" />
+                  <span className="ml-2 text-xs md:text-sm font-medium text-gray-500">Skor</span>
                 </div>
-                <div className="mt-2 text-3xl font-bold text-gray-900">
+                <div className="mt-2 text-2xl md:text-3xl font-bold text-gray-900">
                   {user.userScore || 0}
                 </div>
               </motion.div>
@@ -249,10 +249,10 @@ export default function ProfilePage() {
                 transition={{ type: 'spring', stiffness: 300, damping: 10 }}
               >
                 <div className="flex items-center">
-                  <Clock className="h-8 w-8 text-blue-500" />
-                  <span className="ml-2 text-sm font-medium text-gray-500">Katılım Tarihi</span>
+                  <Clock className="h-6 w-6 md:h-8 md:w-8 text-blue-500" />
+                  <span className="ml-2 text-xs md:text-sm font-medium text-gray-500">Katılım Tarihi</span>
                 </div>
-                <div className="mt-2 text-sm font-medium text-gray-900">
+                <div className="mt-2 text-xs md:text-sm font-medium text-gray-900">
                   {user.createdAt ? new Date(user.createdAt.toDate()).toLocaleDateString() : 'Bilinmiyor'}
                 </div>
               </motion.div>
@@ -263,16 +263,50 @@ export default function ProfilePage() {
                 transition={{ type: 'spring', stiffness: 300, damping: 10 }}
               >
                 <div className="flex items-center">
-                  <Fire className="h-8 w-8 text-red-500" />
-                  <span className="ml-2 text-sm font-medium text-gray-500">Öğrenme Serisi</span>
+                  <Fire className="h-6 w-6 md:h-8 md:w-8 text-red-500" />
+                  <span className="ml-2 text-xs md:text-sm font-medium text-gray-500">Öğrenme Serisi</span>
                 </div>
-                <div className="mt-2 text-3xl font-bold text-gray-900">
+                <div className="mt-2 text-2xl md:text-3xl font-bold text-gray-900">
                   {user.learningStreak || 0} gün
                 </div>
               </motion.div>
+
+        
+
+               
+
             </div>
           </div>
         </motion.div>
+
+        <motion.div className="border-t border-gray-200" variants={itemVariants}>
+          <div className="px-4 md:px-8 py-6">
+            <h2 className="text-xl md:text-2xl font-semibold text-gray-900">Ödüller</h2>
+            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+
+
+              <motion.div 
+                className="bg-purple-300 p-4 rounded-lg shadow"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 10 }}
+              >
+                <div className="flex items-center">
+                  <Award className="h-6 w-6 md:h-8 md:w-8 text-red-500" />
+                  <span className="ml-2 text-xs md:text-sm font-medium text-gray-500">Başarılar</span>
+                </div>
+                <div className="mt-2 text-xl md:text-xl  text-gray-900">
+                  {[
+                    user.awardMaster && 'Usta',
+                    user.awardDetermined && 'Azimli',
+                    user.awardDeveloper && 'Geliştirici'
+                  ].filter(Boolean).join(', ') || 'Henüz ödül kazanılmadı'}
+                </div>
+              </motion.div>
+
+            </div>
+          </div>
+        </motion.div>
+
       </motion.div>
     </motion.div>
   );

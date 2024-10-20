@@ -15,7 +15,7 @@ import SwipeMe from "./Pages/PlayGround/SwipeMe";
 import NigongoSensi from "./Pages/PlayGround/NihongoSensei";
 import Song from "./Pages/Song"; 
 import JapaneseNumberConverter from "./Pages/PlayGround/SuugakuNoSensei";
-
+import ClickNWords from "./Pages/PlayGround/ClickNWords";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 
@@ -39,6 +39,7 @@ function App() {
           <Route path="/playground/3" element={<JapaneseNumberConverter />} />
           <Route path="/playground/6" element={<TranslateASong />} />
           <Route path="/lyric/:id" element={<Song />} /> 
+          <Route path="/playground/4" element={<ClickNWords />} />
           {/*
           Test Routes
           <Route path="/tests/game/swipe" element={<Game />} />
